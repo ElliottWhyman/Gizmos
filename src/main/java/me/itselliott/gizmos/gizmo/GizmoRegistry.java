@@ -1,8 +1,10 @@
 package me.itselliott.gizmos.gizmo;
 
 import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.gizmo.gizmos.RaindropBomb;
+import me.itselliott.gizmos.gizmo.gizmos.RaindropBombGizmo;
+import me.itselliott.gizmos.gizmo.gizmos.SnowballGizmo;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Snowball;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -16,7 +18,8 @@ public class GizmoRegistry {
     private final Map<String, Gizmo> gizmos;
 
     private Class[] gizmoClasses = {
-            RaindropBomb.class
+            RaindropBombGizmo.class,
+            SnowballGizmo.class
     };
 
     public GizmoRegistry(Gizmos plugin) {

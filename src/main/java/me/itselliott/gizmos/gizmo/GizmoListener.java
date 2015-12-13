@@ -1,10 +1,13 @@
 package me.itselliott.gizmos.gizmo;
 
 import me.itselliott.gizmos.Gizmos;
+import me.itselliott.gizmos.event.GizmoUseEvent;
 import me.itselliott.gizmos.utils.Constants;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Set;
@@ -25,15 +28,19 @@ public class GizmoListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        for (Gizmo gizmo : this.gizmos) {
-            if (ChatColor.stripColor(event.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals(gizmo.getName())) {
-                try {
-                    Gizmo gizmo1 = gizmo.getClass().newInstance();
-                    gizmo1.playGizmo(event.getPlayer().getLocation());
-                } catch (InstantiationException | IllegalAccessException e) {
-                    e.printStackTrace();
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            for (Gizmo gizmo : this.gizmos) {
+                if (event.getPlayer().getItemInHand().hasItemMeta()) {
+                    if (ChatColor.stripColor(event.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals(gizmo.getName())) {
+                        try {
+                            gizmo.getClass().newInstance().registerListener();
+                            Bukkit.getPluginManager().callEvent(new GizmoUseEvent(event.getPlayer(), gizmo, event.getPlayer().getLocation()));
+                        } catch (InstantiationException | IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                        event.setCancelled(true);
+                    }
                 }
-                event.setCancelled(true);
             }
         }
     }

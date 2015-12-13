@@ -1,7 +1,5 @@
 package me.itselliott.gizmos.utils;
 
-import java.util.Calendar;
-
 /**
  * Created by Elliott on 05/12/2015.
  */

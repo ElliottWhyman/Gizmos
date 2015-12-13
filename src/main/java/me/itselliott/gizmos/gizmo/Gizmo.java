@@ -1,6 +1,7 @@
 package me.itselliott.gizmos.gizmo;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,7 +14,7 @@ public abstract class Gizmo implements Listener {
     private String name;
     private ItemStack item;
 
-    public Gizmo(int cost, String name, ItemStack item) {
+    public Gizmo(String name, int cost, ItemStack item) {
         this.cost = cost;
         this.name = name;
         this.item = item;
@@ -39,5 +40,6 @@ public abstract class Gizmo implements Listener {
         this.item = item;
     }
 
-    public abstract void playGizmo(final Location location);
+    public abstract void registerListener();
+
 }

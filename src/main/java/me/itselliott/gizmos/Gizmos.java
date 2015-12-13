@@ -4,9 +4,8 @@ import me.itselliott.gizmos.event.RaindropReceiveEvent;
 import me.itselliott.gizmos.event.RaindropUpdateEvent;
 import me.itselliott.gizmos.gizmo.GizmoListener;
 import me.itselliott.gizmos.gizmo.GizmoRegistry;
-import me.itselliott.gizmos.gizmo.gizmos.RaindropBomb;
+import me.itselliott.gizmos.gizmo.gizmos.RaindropBombGizmo;
 import me.itselliott.gizmos.inventory.GizmoInventory;
-import me.itselliott.gizmos.inventory.InventoryListener;
 import me.itselliott.gizmos.raindrops.RaindropHandler;
 import me.itselliott.gizmos.raindrops.RaindropScoreboard;
 import me.itselliott.gizmos.utils.Constants;
@@ -33,26 +32,21 @@ public class Gizmos extends JavaPlugin implements Listener {
 
     private static Gizmos instance;
 
-    private final int raindropValue = 1000; // Default amount of raindrops given to players
+    private final int raindropValue = 10000; // Default amount of raindrops given to players
 
     private GizmoRegistry registry;
     private GizmoInventory gizmoInventory;
     private RaindropHandler raindropHandler;
-    private InventoryListener inventoryListener;
     private GizmoListener gizmoListener;
-
-    private HashMap<UUID, RaindropScoreboard> raindropScoreboards;
 
     @Override
     public void onEnable() {
         instance = this;
         this.getServer().getPluginManager().registerEvents(this, this);
         this.registry = new GizmoRegistry(this);
-        this.gizmoInventory = new GizmoInventory();
+        this.gizmoInventory = new GizmoInventory(this);
         this.raindropHandler = new RaindropHandler();
-        this.inventoryListener = new InventoryListener(this);
         this.gizmoListener = new GizmoListener(this);
-        this.raindropScoreboards = new HashMap<>();
     }
 
     @Override
@@ -90,32 +84,12 @@ public class Gizmos extends JavaPlugin implements Listener {
         this.raindropHandler.setRaindrops(event.getPlayer().getUniqueId(), this.raindropValue);
         // Gives player item to access the gizmo menu with
         event.getPlayer().getInventory().addItem(new ItemBuilder(Material.GHAST_TEAR).setName(ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + Constants.GIZMOS).createItem());
-        // Give the player a scoreboard with raindrop infromation
+        // Give the player a scoreboard with raindrop information
         RaindropScoreboard scoreboard = new RaindropScoreboard(event.getPlayer(), this.raindropHandler.getRaindrops(event.getPlayer().getUniqueId()));
         event.getPlayer().setScoreboard(scoreboard.getScoreboard());
-        this.raindropScoreboards.put(event.getPlayer().getUniqueId(), scoreboard);
+        this.raindropHandler.getRaindropScoreboards().put(event.getPlayer().getUniqueId(), scoreboard);
     }
 
-    @EventHandler
-    public void onRaindropRecieve(RaindropReceiveEvent event) {
-        event.getPlayer().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "+" + event.getAmount() + ChatColor.RESET + "" + ChatColor.DARK_PURPLE + " | " + ChatColor.WHITE + "Raindrops Received");
-        event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 0);
 
-        Bukkit.getPluginManager().callEvent(new RaindropUpdateEvent(event.getPlayer()));
-    }
-
-    @EventHandler
-    public void onRaindropUpdate(RaindropUpdateEvent event) {
-        // Updates the scoreboard to show new raindrop count
-        this.raindropScoreboards.get(event.getPlayer().getUniqueId()).update();
-    }
-
-    @EventHandler
-    public void onchat(AsyncPlayerChatEvent event) {
-        if (event.getMessage().equalsIgnoreCase("raindrop bomb")) {
-            RaindropBomb raindropBomb = new RaindropBomb();
-            raindropBomb.playGizmo(event.getPlayer().getLocation());
-        }
-    }
 
 }
