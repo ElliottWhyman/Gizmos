@@ -1,27 +1,19 @@
 package me.itselliott.gizmos;
 
-import me.itselliott.gizmos.event.RaindropReceiveEvent;
-import me.itselliott.gizmos.event.RaindropUpdateEvent;
 import me.itselliott.gizmos.gizmo.GizmoListener;
 import me.itselliott.gizmos.gizmo.GizmoRegistry;
-import me.itselliott.gizmos.gizmo.gizmos.RaindropBombGizmo;
 import me.itselliott.gizmos.inventory.GizmoInventory;
 import me.itselliott.gizmos.raindrops.RaindropHandler;
 import me.itselliott.gizmos.raindrops.RaindropScoreboard;
 import me.itselliott.gizmos.utils.Constants;
 import me.itselliott.gizmos.utils.ItemBuilder;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * Mock up plugin to mimic Overcast Networks Gizmos'
@@ -45,7 +37,7 @@ public class Gizmos extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(this, this);
         this.registry = new GizmoRegistry(this);
         this.gizmoInventory = new GizmoInventory(this);
-        this.raindropHandler = new RaindropHandler();
+        this.raindropHandler = new RaindropHandler(this);
         this.gizmoListener = new GizmoListener(this);
     }
 

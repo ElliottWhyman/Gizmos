@@ -30,6 +30,7 @@ public class GizmoInventory implements Listener {
         this.gizmos = Gizmos.get().getRegistry().getGizmosSet();
         this.addGizmos();
         this.plugin = plugin;
+        this.plugin.registerListener(this);
     }
 
     private void addGizmos() {
@@ -46,7 +47,7 @@ public class GizmoInventory implements Listener {
     public void onPlayerClick(PlayerInteractEvent event) {
         if (event.getPlayer().getItemInHand().hasItemMeta() && event.getPlayer().getItemInHand().getItemMeta().hasDisplayName()) {
             if (ChatColor.stripColor(event.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals(Constants.GIZMOS)) {
-                event.getPlayer().openInventory(this.plugin.getGizmoInventory().getInventory());
+                event.getPlayer().openInventory(this.inventory);
             }
         }
     }

@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -14,20 +15,17 @@ import java.util.UUID;
 /**
  * Created by Elliott on 05/12/2015.
  */
-public class RaindropHandler {
+public class RaindropHandler implements Listener {
 
     private Gizmos plugin;
     private HashMap<UUID, RaindropScoreboard> raindropScoreboards;
+    private HashMap<UUID, Integer> raindrops; // Where the amount of raindrops each player is stored
 
     public RaindropHandler(Gizmos plugin) {
         this.plugin = plugin;
         this.raindropScoreboards = new HashMap<>();
-    }
-
-    private HashMap<UUID, Integer> raindrops; // Where the amount of raindrops each player is stored
-
-    public RaindropHandler() {
         this.raindrops = new HashMap<>();
+        this.plugin.registerListener(this);
     }
 
     public HashMap<UUID, Integer> getRaindrops() {

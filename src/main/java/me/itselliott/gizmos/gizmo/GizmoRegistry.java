@@ -4,10 +4,12 @@ import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.gizmo.gizmos.RaindropBombGizmo;
 import me.itselliott.gizmos.gizmo.gizmos.SnowballGizmo;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Snowball;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Elliott on 05/12/2015.

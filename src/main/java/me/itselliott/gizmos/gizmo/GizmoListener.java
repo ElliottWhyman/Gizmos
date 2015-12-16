@@ -23,7 +23,7 @@ public class GizmoListener implements Listener {
     public GizmoListener(Gizmos plugin) {
         this.plugin = plugin;
         this.gizmos = plugin.getRegistry().getGizmosSet();
-        plugin.registerListener(this);
+        this.plugin.registerListener(this);
     }
 
     @EventHandler
