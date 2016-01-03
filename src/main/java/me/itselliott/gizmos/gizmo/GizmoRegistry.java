@@ -1,57 +1,54 @@
 package me.itselliott.gizmos.gizmo;
 
-import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.gizmo.gizmos.RaindropBombGizmo;
-import me.itselliott.gizmos.gizmo.gizmos.SnowballGizmo;
+import me.itselliott.gizmos.gizmo.gizmos.paintGun.PaintLoader;
+import me.itselliott.gizmos.gizmo.gizmos.raindropBomb.RaindropBombLoader;
+import me.itselliott.gizmos.gizmo.gizmos.snowball.SnowballLoader;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Elliott on 05/12/2015.
  */
 public class GizmoRegistry {
 
-    private final Gizmos plugin;
     private final Map<String, Gizmo> gizmos;
+    private Set<Class<? extends GizmoLoader>> loaderClasses;
+    private Set<Gizmo> gizmoSet;
 
-    private Class[] gizmoClasses = {
-            RaindropBombGizmo.class,
-            SnowballGizmo.class
-    };
-
-    public GizmoRegistry(Gizmos plugin) {
-        this.plugin = plugin;
+    public GizmoRegistry() {
         this.gizmos = new HashMap<>();
-        for (Class gizmo : this.gizmoClasses) {
+        this.gizmoSet = new HashSet<>();
+        this.loaderClasses = new HashSet<>();
+        this.loaderClasses.addAll(Arrays.asList(
+                RaindropBombLoader.class,
+                PaintLoader.class,
+                SnowballLoader.class
+        ));
+    }
+
+    public void registerLoaders() {
+        for (Class<? extends GizmoLoader> loader : this.loaderClasses) {
             try {
-                Gizmo giz = (Gizmo) gizmo.getConstructor().newInstance();
-                this.gizmos.put(giz.getName(), giz);
-            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
-                Bukkit.getLogger().severe("Unable to load " + gizmo.getName());
+                GizmoLoader gizmoLoader = loader.newInstance();
+                gizmoLoader.registerListener();
+                Gizmo gizmo = gizmoLoader.getGizmo();
+                this.gizmos.put(gizmo.getName(), gizmo);
+                this.gizmoSet.add(gizmo);
+                Bukkit.getLogger().info("Gizmo Registered " + gizmo.getName());
+            } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-        for (Gizmo gizmo : this.gizmos.values()) {
-            this.plugin.getServer().getPluginManager().registerEvents(gizmo, this.plugin);
-            Bukkit.getLogger().info("Loaded gizmo " + gizmo.getName());
-        }
     }
 
-    public Map<String, Gizmo> getGizmos() {
+    public Map<String, Gizmo> getGizmoMap() {
         return this.gizmos;
     }
 
-    public Set<Gizmo> getGizmosSet() {
-        Set<Gizmo> gizmos = new HashSet<>();
-        for (Gizmo gizmo : this.gizmos.values()) {
-            gizmos.add(gizmo);
-        }
-        return gizmos;
+    public Set<Gizmo> getGizmos() {
+        return this.gizmoSet;
     }
 
 }

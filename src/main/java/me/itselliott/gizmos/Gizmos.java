@@ -1,14 +1,15 @@
 package me.itselliott.gizmos;
 
-import me.itselliott.gizmos.gizmo.GizmoListener;
 import me.itselliott.gizmos.gizmo.GizmoRegistry;
-import me.itselliott.gizmos.inventory.GizmoInventory;
+import me.itselliott.gizmos.inventory.MenuHandler;
+import me.itselliott.gizmos.inventory.menus.GizmoMenu;
 import me.itselliott.gizmos.raindrops.RaindropHandler;
 import me.itselliott.gizmos.raindrops.RaindropScoreboard;
 import me.itselliott.gizmos.utils.Constants;
 import me.itselliott.gizmos.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -27,18 +28,17 @@ public class Gizmos extends JavaPlugin implements Listener {
     private final int raindropValue = 10000; // Default amount of raindrops given to players
 
     private GizmoRegistry registry;
-    private GizmoInventory gizmoInventory;
     private RaindropHandler raindropHandler;
-    private GizmoListener gizmoListener;
+    private MenuHandler menuHandler;
 
     @Override
     public void onEnable() {
         instance = this;
         this.getServer().getPluginManager().registerEvents(this, this);
-        this.registry = new GizmoRegistry(this);
-        this.gizmoInventory = new GizmoInventory(this);
+        this.registry = new GizmoRegistry();
+        this.registry.registerLoaders(); // Registers all GizmoLoaders which trigger the gizmos when used
         this.raindropHandler = new RaindropHandler(this);
-        this.gizmoListener = new GizmoListener(this);
+        this.menuHandler = new MenuHandler();
     }
 
     @Override
@@ -62,26 +62,18 @@ public class Gizmos extends JavaPlugin implements Listener {
         return this.registry;
     }
 
-    public GizmoInventory getGizmoInventory() {
-        return this.gizmoInventory;
-    }
-
     public void registerListener(Listener listener) {
         this.getServer().getPluginManager().registerEvents(listener, this);
     }
 
     @EventHandler
     public void onPlayerConnect(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
         // Gives players a set a amount of raindrops on connect for mock up purposes
         this.raindropHandler.setRaindrops(event.getPlayer().getUniqueId(), this.raindropValue);
-        // Gives player item to access the gizmo menu with
-        event.getPlayer().getInventory().addItem(new ItemBuilder(Material.GHAST_TEAR).setName(ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + Constants.GIZMOS).createItem());
         // Give the player a scoreboard with raindrop information
-        RaindropScoreboard scoreboard = new RaindropScoreboard(event.getPlayer(), this.raindropHandler.getRaindrops(event.getPlayer().getUniqueId()));
-        event.getPlayer().setScoreboard(scoreboard.getScoreboard());
-        this.raindropHandler.getRaindropScoreboards().put(event.getPlayer().getUniqueId(), scoreboard);
+        RaindropScoreboard scoreboard = new RaindropScoreboard(player, this.raindropHandler.getRaindrops(player.getUniqueId()));
+        player.setScoreboard(scoreboard.getScoreboard());
+        this.raindropHandler.getRaindropScoreboards().put(player.getUniqueId(), scoreboard);
     }
-
-
-
 }

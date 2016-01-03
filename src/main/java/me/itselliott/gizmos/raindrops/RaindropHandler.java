@@ -2,7 +2,7 @@ package me.itselliott.gizmos.raindrops;
 
 import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.event.RaindropReceiveEvent;
-import me.itselliott.gizmos.event.RaindropUpdateEvent;
+import me.itselliott.gizmos.event.RaindropEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -53,11 +53,11 @@ public class RaindropHandler implements Listener {
         event.getPlayer().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "+" + event.getAmount() + ChatColor.RESET + "" + ChatColor.DARK_PURPLE + " | " + ChatColor.WHITE + "Raindrops Received");
         event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 0);
 
-        Bukkit.getPluginManager().callEvent(new RaindropUpdateEvent(event.getPlayer()));
+        Bukkit.getPluginManager().callEvent(new RaindropEvent(event.getPlayer()));
     }
 
     @EventHandler
-    public void onRaindropUpdate(RaindropUpdateEvent event) {
+    public void onRaindropUpdate(RaindropEvent event) {
         // Updates the scoreboard to show new raindrop count
         this.raindropScoreboards.get(event.getPlayer().getUniqueId()).update();
     }

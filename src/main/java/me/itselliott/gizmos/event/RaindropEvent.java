@@ -7,13 +7,13 @@ import org.bukkit.event.HandlerList;
 /**
  * Created by Elliott on 05/12/2015.
  */
-public class RaindropUpdateEvent extends Event {
+public class RaindropEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
     private Player player;
 
-    public RaindropUpdateEvent(Player player) {
+    public RaindropEvent(Player player) {
         this.player = player;
     }
 

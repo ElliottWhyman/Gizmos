@@ -2,6 +2,7 @@ package me.itselliott.gizmos.utils;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -23,6 +24,10 @@ public class ItemBuilder {
 
     public ItemBuilder(Material material) {
         this.material = material;
+    }
+
+    public ItemBuilder(ItemStack itemStack) {
+        this.itemStack = itemStack;
     }
 
     public ItemBuilder setMaterial(Material material) {

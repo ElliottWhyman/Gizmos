@@ -1,13 +1,10 @@
-package me.itselliott.gizmos.gizmo.gizmos;
+package me.itselliott.gizmos.gizmo.gizmos.raindropBomb;
 
 import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.event.GizmoUseEvent;
 import me.itselliott.gizmos.event.RaindropReceiveEvent;
 import me.itselliott.gizmos.gizmo.Gizmo;
-import me.itselliott.gizmos.utils.Constants;
-import me.itselliott.gizmos.utils.Hologram;
-import me.itselliott.gizmos.utils.ItemBuilder;
-import me.itselliott.gizmos.utils.Time;
+import me.itselliott.gizmos.utils.*;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
@@ -26,10 +23,11 @@ import org.bukkit.util.Vector;
 public class RaindropBombGizmo extends Gizmo {
 
     private final int time = 3;
-    private final int tntFuse = time * 20; // 3 Seconds
+    private final int timeInTicks = time * 20; // 3 Seconds
     private final int radius = 10; // 10 Blocks
+    private Player player;
 
-    boolean cancel;
+    boolean cancel = false;
 
     private int[] taskIDs = new int[2];
 
@@ -41,13 +39,15 @@ public class RaindropBombGizmo extends Gizmo {
     @EventHandler
     public void onGizmoUse(GizmoUseEvent event) {
         if (!event.isCancelled() && event.getGizmo() == this) {
-            this.spawnTNT(event.getLocation());
+            this.player = event.getPlayer();
+            this.spawnTNT(this.player);
         }
     }
 
-    public void spawnTNT(final Location location) {
+    public void spawnTNT(final Player player) {
+        final Location location = player.getLocation();
         TNTPrimed tntPrimed = location.getWorld().spawn(location, TNTPrimed.class);
-        tntPrimed.setFuseTicks(this.tntFuse);
+        tntPrimed.setFuseTicks(this.timeInTicks);
         tntPrimed.setYield(0);
         final Hologram countdown = new Hologram(location.setY(location.getY() - 0.5), ChatColor.BOLD + "" + ChatColor.RED + Time.formatTime(5, 0));
         this.taskIDs[0] = Bukkit.getScheduler().scheduleSyncRepeatingTask(Gizmos.get(), new Runnable() {
@@ -101,13 +101,13 @@ public class RaindropBombGizmo extends Gizmo {
         this.taskIDs[1] = Bukkit.getScheduler().scheduleSyncRepeatingTask(Gizmos.get(), new Runnable() {
             @Override
             public void run() {
-                if (cancel) {
+                if (!cancel) {
                     Item item = location.getWorld().dropItem(location, new ItemStack(Material.GHAST_TEAR, 1));
                     item.setVelocity(Vector.getRandom());
                 }
             }
         }, 0, 2);
-
+        GizmoUtil.remove(player);
     }
 
     @EventHandler
@@ -128,6 +128,5 @@ public class RaindropBombGizmo extends Gizmo {
     @Override
     public void registerListener() {
         Gizmos.get().registerListener(this);
-
     }
 }
