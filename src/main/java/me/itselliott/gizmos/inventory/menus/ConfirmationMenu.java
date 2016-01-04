@@ -6,6 +6,7 @@ import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.utils.Constants;
 import me.itselliott.gizmos.utils.ItemBuilder;
+import me.itselliott.gizmos.utils.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -43,9 +44,9 @@ public class ConfirmationMenu extends Menu {
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getInventory().getName().equals(this.getName())) {
             if (event.getCurrentItem().hasItemMeta()) {
-                if (ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).equals("Accept")) {
+                if (StringUtil.checkStrings(event.getCurrentItem().getItemMeta().getDisplayName(), "Accept")) {
                     Bukkit.getPluginManager().callEvent(new PaymentEvent(event.getActor(), this.paymentId, this.item, this.amount, true));
-                } else if (ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).equals("Cancel")) {
+                } else if (StringUtil.checkStrings(event.getCurrentItem().getItemMeta().getDisplayName(), "Cancel")) {
                     event.getActor().closeInventory();
                     Bukkit.getPluginManager().callEvent(new PaymentEvent(event.getActor(), this.paymentId, this.item, this.amount, false));
                 }

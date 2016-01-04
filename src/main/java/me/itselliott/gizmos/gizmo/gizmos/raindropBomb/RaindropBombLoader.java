@@ -6,6 +6,7 @@ import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.gizmo.GizmoLoader;
 import me.itselliott.gizmos.utils.Constants;
 import me.itselliott.gizmos.utils.GizmoUtil;
+import me.itselliott.gizmos.utils.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -19,7 +20,7 @@ public class RaindropBombLoader implements GizmoLoader, Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getItem().hasItemMeta() && ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()).equals(Constants.RAINDROP_BOMB)) {
+        if (event.getItem().hasItemMeta() && StringUtil.checkStrings(event.getItem().getItemMeta().getDisplayName(), Constants.RAINDROP_BOMB)) {
             if (!GizmoUtil.hasGizmos(event.getPlayer())) {
                 Gizmo gizmo = new RaindropBombGizmo();
                 // Registers events inside of the gizmo class

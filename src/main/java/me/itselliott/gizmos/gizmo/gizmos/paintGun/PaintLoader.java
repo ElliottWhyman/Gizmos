@@ -7,6 +7,7 @@ import me.itselliott.gizmos.gizmo.GizmoLoader;
 import me.itselliott.gizmos.utils.Constants;
 import me.itselliott.gizmos.utils.GizmoUtil;
 import me.itselliott.gizmos.utils.ItemBuilder;
+import me.itselliott.gizmos.utils.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,7 +22,7 @@ public class PaintLoader implements GizmoLoader, Listener {
 
     @EventHandler
     public void onPlayerUse(PlayerInteractEvent event) {
-        if (event.getItem().hasItemMeta() && ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()).equals(Constants.PAINT_GIZMO)) {
+        if (event.getItem().hasItemMeta() && StringUtil.checkStrings(event.getItem().getItemMeta().getDisplayName(), Constants.PAINT_GIZMO)) {
             if (!GizmoUtil.hasGizmos(event.getPlayer())) {
                 Gizmo gizmo = new PaintGizmo(event.getItem());
                 // Registers events inside of the gizmo class

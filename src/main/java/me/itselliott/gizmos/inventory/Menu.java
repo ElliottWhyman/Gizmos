@@ -2,6 +2,7 @@ package me.itselliott.gizmos.inventory;
 
 import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.utils.ItemBuilder;
+import me.itselliott.gizmos.utils.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -50,10 +51,9 @@ public abstract class Menu implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getInventory().getName().equals(this.name) && event.getCurrentItem().getType().equals(Material.EYE_OF_ENDER)) {
             if (event.getCurrentItem().hasItemMeta()) {
-                Bukkit.broadcastMessage("yes");
-                if (ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).equals("Back")) {
+                if (StringUtil.checkStrings(event.getCurrentItem().getItemMeta().getDisplayName(), "Back")) {
                     this.back(event.getActor());
-                } else if (ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).equals("Forward")) {
+                } else if (StringUtil.checkStrings(event.getCurrentItem().getItemMeta().getDisplayName(), "Forward")) {
                     this.next(event.getActor());
                 }
             }

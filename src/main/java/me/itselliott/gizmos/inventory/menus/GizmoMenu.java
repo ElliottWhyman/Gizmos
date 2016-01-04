@@ -7,6 +7,7 @@ import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.inventory.PaymentMenu;
 import me.itselliott.gizmos.utils.Constants;
+import me.itselliott.gizmos.utils.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -50,7 +51,7 @@ public class GizmoMenu extends PaymentMenu {
     @EventHandler
     public void onPlayerClick(PlayerInteractEvent event) {
         if (event.getPlayer().getItemInHand().hasItemMeta() && event.getPlayer().getItemInHand().getItemMeta().hasDisplayName()) {
-            if (ChatColor.stripColor(event.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals(Constants.GIZMOS)) {
+            if (StringUtil.checkStrings(event.getPlayer().getItemInHand().getItemMeta().getDisplayName(), Constants.GIZMOS)) {
                 this.open(event.getPlayer());
             }
         }
@@ -60,8 +61,8 @@ public class GizmoMenu extends PaymentMenu {
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getCurrentItem() != null && (event.getCurrentItem() != this.getForwardItem() || event.getCurrentItem() != this.getBackItem())) {
             Player player = (Player) event.getWhoClicked();
-            if (ChatColor.stripColor(event.getInventory().getName()).equals(Constants.GIZMOS) && event.getCurrentItem().hasItemMeta()) {
-                if (ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).equals(Constants.PAINT_GIZMO)) { //TODO: prevent the need for special cases when using custom menus for a gizmo.
+            if (StringUtil.checkStrings(event.getInventory().getName(), Constants.GIZMOS) && event.getCurrentItem().hasItemMeta()) {
+                if (StringUtil.checkStrings(event.getCurrentItem().getItemMeta().getDisplayName(), Constants.PAINT_GIZMO)) { //TODO: prevent the need for special cases when using custom menus for a gizmo.
                     new PaintMenu(event.getActor(), this).open(event.getActor());
                 } else {
                     Gizmo gizmo = this.plugin.getRegistry().getGizmoMap().get(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
