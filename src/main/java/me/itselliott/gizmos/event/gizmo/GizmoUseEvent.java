@@ -1,4 +1,4 @@
-package me.itselliott.gizmos.event;
+package me.itselliott.gizmos.event.gizmo;
 
 import me.itselliott.gizmos.gizmo.Gizmo;
 import org.bukkit.Location;

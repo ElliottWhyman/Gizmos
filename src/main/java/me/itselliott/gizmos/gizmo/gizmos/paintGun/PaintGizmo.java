@@ -1,8 +1,10 @@
 package me.itselliott.gizmos.gizmo.gizmos.paintGun;
 
 import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.event.GizmoUseEvent;
+import me.itselliott.gizmos.event.gizmo.GizmoUseEvent;
 import me.itselliott.gizmos.gizmo.Gizmo;
+import me.itselliott.gizmos.inventory.Menu;
+import me.itselliott.gizmos.inventory.menus.PaintMenu;
 import me.itselliott.gizmos.utils.Constants;
 import me.itselliott.gizmos.utils.GizmoUtil;
 import me.itselliott.gizmos.utils.ItemBuilder;
@@ -80,6 +82,11 @@ public class PaintGizmo extends Gizmo {
                 block.setData(data);
             }
         }, 2 * 20);
+    }
+
+    @Override
+    public void clickAction(Menu menu, Player player) {
+        new PaintMenu(menu).open(player);
     }
 
     @Override

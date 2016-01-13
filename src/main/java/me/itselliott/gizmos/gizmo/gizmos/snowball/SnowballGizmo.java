@@ -1,9 +1,11 @@
 package me.itselliott.gizmos.gizmo.gizmos.snowball;
 
 import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.event.GizmoUseEvent;
+import me.itselliott.gizmos.event.gizmo.GizmoUseEvent;
 import me.itselliott.gizmos.gizmo.Gizmo;
+import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.utils.Constants;
+import me.itselliott.gizmos.utils.GizmoUtil;
 import me.itselliott.gizmos.utils.ItemBuilder;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityEquipment;
 import org.apache.commons.lang.Validate;
@@ -50,6 +52,11 @@ public class SnowballGizmo extends Gizmo {
                 this.sendEquipmentPacket((Player) snowball.getShooter(), (Player) event.getEntity());
             }
         }
+    }
+
+    @Override
+    public void clickAction(Menu menu, Player player) {
+        GizmoUtil.checkAndBuyGizmo(player, this.getCost(), this.getItem());
     }
 
     @Override

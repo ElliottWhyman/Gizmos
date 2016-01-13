@@ -1,7 +1,11 @@
 package me.itselliott.gizmos.utils;
 
+import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.gizmo.Gizmo;
+import me.itselliott.gizmos.inventory.menus.ConfirmationMenu;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -22,6 +26,12 @@ public class GizmoUtil {
 
     public static void remove(Player player) {
         playerGizmos.remove(player.getName());
+    }
+
+    public static void checkAndBuyGizmo(Player player, int cost, ItemStack itemStack) {
+        if (Gizmos.get().getRaindropHandler().canAfford(player.getUniqueId(), cost)) {
+            new ConfirmationMenu(Gizmos.get(), cost, itemStack).open(player);
+        } else player.sendMessage(ChatColor.RED + "Insufficient Funds");
     }
 
 }

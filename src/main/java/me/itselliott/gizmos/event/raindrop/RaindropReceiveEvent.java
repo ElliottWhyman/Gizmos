@@ -1,26 +1,25 @@
-package me.itselliott.gizmos.event;
+package me.itselliott.gizmos.event.raindrop;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
  * Created by Elliott on 05/12/2015.
  */
-public class RaindropEvent extends Event {
+public class RaindropReceiveEvent extends RaindropEvent {
 
     private static final HandlerList handlers = new HandlerList();
 
-    private Player player;
+    private int amount;
 
-    public RaindropEvent(Player player) {
-        this.player = player;
+    public RaindropReceiveEvent(Player player, int amount) {
+        super(player);
+        this.amount = amount;
     }
 
-    public Player getPlayer() {
-        return this.player;
+    public int getAmount() {
+        return this.amount;
     }
-
 
     @Override
     public HandlerList getHandlers() {
@@ -31,4 +30,3 @@ public class RaindropEvent extends Event {
         return handlers;
     }
 }
-

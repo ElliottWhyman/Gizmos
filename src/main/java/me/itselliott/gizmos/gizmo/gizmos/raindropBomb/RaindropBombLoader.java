@@ -1,14 +1,13 @@
 package me.itselliott.gizmos.gizmo.gizmos.raindropBomb;
 
 import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.event.GizmoUseEvent;
+import me.itselliott.gizmos.event.gizmo.GizmoUseEvent;
 import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.gizmo.GizmoLoader;
 import me.itselliott.gizmos.utils.Constants;
 import me.itselliott.gizmos.utils.GizmoUtil;
 import me.itselliott.gizmos.utils.StringUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;

@@ -1,9 +1,11 @@
 package me.itselliott.gizmos.gizmo.gizmos.raindropBomb;
 
 import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.event.GizmoUseEvent;
-import me.itselliott.gizmos.event.RaindropReceiveEvent;
+import me.itselliott.gizmos.event.gizmo.GizmoUseEvent;
+import me.itselliott.gizmos.event.raindrop.RaindropReceiveEvent;
 import me.itselliott.gizmos.gizmo.Gizmo;
+import me.itselliott.gizmos.inventory.Menu;
+import me.itselliott.gizmos.inventory.menus.ConfirmationMenu;
 import me.itselliott.gizmos.utils.*;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
@@ -123,6 +125,11 @@ public class RaindropBombGizmo extends Gizmo {
             event.setCancelled(true);
             event.getItem().remove();
         }
+    }
+
+    @Override
+    public void clickAction(Menu menu, Player player) {
+        GizmoUtil.checkAndBuyGizmo(player, this.getCost(), this.getItem());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package me.itselliott.gizmos.event;
+package me.itselliott.gizmos.event.payment;
 
 import me.itselliott.gizmos.gizmo.Gizmo;
 import org.bukkit.entity.Player;
@@ -16,16 +16,14 @@ public class PaymentEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
     private Player player;
-    private UUID id;
+    private int cost;
     private ItemStack item;
-    private int amount;
     private boolean accepted;
 
-    public PaymentEvent(Player player, UUID id, ItemStack item, int amount, boolean accepted) {
+    public PaymentEvent(Player player, int cost, ItemStack item, boolean accepted) {
         this.player = player;
-        this.id = id;
+        this.cost = cost;
         this.item = item;
-        this.amount = amount;
         this.accepted = accepted;
     }
 
@@ -33,16 +31,12 @@ public class PaymentEvent extends Event {
         return this.player;
     }
 
-    public UUID getPaymentId() {
-        return this.id;
+    public int getCost() {
+        return this.cost;
     }
 
     public ItemStack getItem() {
         return this.item;
-    }
-
-    public int getAmount() {
-        return this.amount;
     }
 
     public boolean isAccepted() {

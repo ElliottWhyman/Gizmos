@@ -1,28 +1,23 @@
 package me.itselliott.gizmos.inventory.menus;
 
-import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.gizmo.gizmos.paintGun.Paint;
 import me.itselliott.gizmos.inventory.Menu;
-import me.itselliott.gizmos.inventory.PaymentMenu;
+import me.itselliott.gizmos.inventory.interactables.clickables.Clickable;
 import me.itselliott.gizmos.utils.Constants;
+import me.itselliott.gizmos.utils.GizmoUtil;
 import me.itselliott.gizmos.utils.ItemBuilder;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by Elliott2 on 03/01/2016.
  */
-public class PaintMenu extends PaymentMenu {
+public class PaintMenu extends Menu {
 
-
-
-    private Player player;
     private List<Paint> paints = Arrays.asList(
             new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)1).setName(Constants.PAINT_GIZMO).createItem() , 200),
             new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)2).setName(Constants.PAINT_GIZMO).createItem() , 200),
@@ -41,31 +36,40 @@ public class PaintMenu extends PaymentMenu {
 
     );
 
-    public PaintMenu(Player player, Menu gizmoMenuParent) {
-        super(Gizmos.get(), player, UUID.randomUUID(), Constants.PAINT_MENU, 7);
-        this.setRows((int) Math.ceil((double) this.paints.size() / 9));
-        this.player = player;
-        this.setParent(gizmoMenuParent);
+    private Menu parent;
+
+    public PaintMenu(Menu parent) {
+        super(Constants.PAINT_MENU, 7);
+        this.parent = parent;
+        this.setRows((int) Math.ceil((double) (this.paints.size() + 1) / 9));
         this.populateMenu();
     }
 
 
     @Override
     public void populateMenu() {
-        for (Paint paint : this.paints) {
-            this.addItem(paint.getItemStack());
+        for (final Paint paint : this.paints) {
+            this.addItem(new Clickable(paint.getItemStack()) {
+                @Override
+                @EventHandler
+                public void action(InventoryClickEvent event) {
+                    if (event.getCurrentItem().equals(paint.getItemStack())) {
+                        GizmoUtil.checkAndBuyGizmo(event.getActor(), paint.getCost(), paint.getItemStack());
+                        event.setCancelled(true);
+                    }
+                }
+            }.getItemStack());
         }
-    }
-
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getInventory().getName().equals(this.getName())) {
-            for (Paint paint : this.paints) {
-                if (paint.getItemStack().equals(event.getCurrentItem())) {
-                    this.checkAndBuyGizmo(event.getActor(), paint.getCost(), paint.getItemStack());
+        this.addItem(new Clickable(new ItemBuilder(Material.WOOD).setName("Back").createItem()) {
+            @Override
+            @EventHandler
+            public void action(InventoryClickEvent event) {
+                if (event.getCurrentItem().equals(this.getItemStack())) {
+                    event.getActor().closeInventory();
+                    parent.open(event.getActor());
+                    event.setCancelled(true);
                 }
             }
-            event.setCancelled(true);
-        }
+        }.getItemStack());
     }
 }

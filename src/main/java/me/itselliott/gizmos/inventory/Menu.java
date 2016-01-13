@@ -1,83 +1,29 @@
 package me.itselliott.gizmos.inventory;
 
-import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.utils.ItemBuilder;
-import me.itselliott.gizmos.utils.StringUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * Created by Elliott2 on 31/12/2015.
  */
-public abstract class Menu implements Listener {
+public abstract class Menu {
 
-    private Menu parent;
-    private Menu child;
     private String name;
     private int rows;
 
     private Inventory inventory;
 
-    private ItemStack back;
-    private ItemStack forward;
-
-    public Menu(Menu parent, Menu child, String name, int rows) {
-        this.parent = parent;
-        this.child = child;
+    public Menu(String name, int rows) {
         this.name = name;
         this.rows = rows;
 
-        this.back = new ItemBuilder(Material.EYE_OF_ENDER).setName(ChatColor.RED + "Back").createItem();
-        this.forward = new ItemBuilder(Material.EYE_OF_ENDER).setName(ChatColor.GREEN + "Forward").createItem();
-
         this.inventory = Bukkit.createInventory(null, this.rows * 9, this.name);
-        this.inventory.setItem(0, this.back);
-        this.inventory.setItem(8, this.forward);
-
-        Gizmos.get().registerListener(this);
-
     }
 
     public abstract void populateMenu();
-
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getInventory().getName().equals(this.name) && event.getCurrentItem().getType().equals(Material.EYE_OF_ENDER)) {
-            if (event.getCurrentItem().hasItemMeta()) {
-                if (StringUtil.checkStrings(event.getCurrentItem().getItemMeta().getDisplayName(), "Back")) {
-                    this.back(event.getActor());
-                } else if (StringUtil.checkStrings(event.getCurrentItem().getItemMeta().getDisplayName(), "Forward")) {
-                    this.next(event.getActor());
-                }
-            }
-        }
-        event.setCancelled(true);
-    }
-
-    /**
-     * @param player Player to open next inventory
-     */
-    public void next(Player player) {
-        close(player);
-        if (this.child != null)
-            this.child.open(player);
-    }
-
-    /**
-     * @param player Player to open previous inventory
-     */
-    public void back(Player player) {
-        close(player);
-        if (this.parent != null)
-            this.parent.open(player);
-    }
 
     /**
      * Adds a array of items into the next available slot
@@ -148,38 +94,6 @@ public abstract class Menu implements Listener {
     }
 
     /**
-     * Set a parent inventory which a player can use to go back
-     * @param parent Parent inventory
-     */
-    public void setParent(Menu parent) {
-        this.parent = parent;
-    }
-
-    /**
-     * Set a child inventory which a player can use to go forward
-     * @param child Child inventory
-     */
-    public void setChild(Menu child) {
-        this.child = child;
-    }
-
-    /**
-     * Gets the back menu
-     * @return Parent menu
-     */
-    public Menu getParent() {
-        return this.parent;
-    }
-
-    /**
-     * Gets the forward menu
-     * @return Child menu
-     */
-    public Menu getChild() {
-        return this.child;
-    }
-
-    /**
      * @return Returns name of inventory
      */
     public String getName() {
@@ -200,17 +114,4 @@ public abstract class Menu implements Listener {
         return this.inventory;
     }
 
-    /**
-     * @return Returns the itemstack used to take a player forward in menus
-     */
-    public ItemStack getForwardItem() {
-        return this.forward;
-    }
-
-    /**
-     * @return Returns the itemstack used to take a player forward in menus
-     */
-    public ItemStack getBackItem() {
-        return this.back;
-    }
 }

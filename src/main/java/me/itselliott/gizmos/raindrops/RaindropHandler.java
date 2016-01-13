@@ -1,8 +1,8 @@
 package me.itselliott.gizmos.raindrops;
 
 import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.event.RaindropReceiveEvent;
-import me.itselliott.gizmos.event.RaindropEvent;
+import me.itselliott.gizmos.event.raindrop.RaindropReceiveEvent;
+import me.itselliott.gizmos.event.raindrop.RaindropEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;

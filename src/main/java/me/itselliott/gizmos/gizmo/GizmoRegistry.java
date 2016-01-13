@@ -13,13 +13,11 @@ import java.util.*;
  */
 public class GizmoRegistry {
 
-    private final Map<String, Gizmo> gizmos;
     private Set<Class<? extends GizmoLoader>> loaderClasses;
-    private Set<Gizmo> gizmoSet;
+    private Set<Gizmo> gizmos;
 
     public GizmoRegistry() {
-        this.gizmos = new HashMap<>();
-        this.gizmoSet = new HashSet<>();
+        this.gizmos = new HashSet<>();
         this.loaderClasses = new HashSet<>();
         this.loaderClasses.addAll(Arrays.asList(
                 RaindropBombLoader.class,
@@ -34,8 +32,7 @@ public class GizmoRegistry {
                 GizmoLoader gizmoLoader = loader.newInstance();
                 gizmoLoader.registerListener();
                 Gizmo gizmo = gizmoLoader.getGizmo();
-                this.gizmos.put(gizmo.getName(), gizmo);
-                this.gizmoSet.add(gizmo);
+                this.gizmos.add(gizmo);
                 Bukkit.getLogger().info("Gizmo Registered " + gizmo.getName());
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
@@ -43,12 +40,8 @@ public class GizmoRegistry {
         }
     }
 
-    public Map<String, Gizmo> getGizmoMap() {
-        return this.gizmos;
-    }
-
     public Set<Gizmo> getGizmos() {
-        return this.gizmoSet;
+        return this.gizmos;
     }
 
 }
