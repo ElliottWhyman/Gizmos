@@ -28,8 +28,7 @@ public class SnowballGizmo extends Gizmo {
     private Player player;
 
     public SnowballGizmo() {
-        super(Constants.SNOWBALL_GIZMO, Constants.SNOWBALL_GIZMO_COST,
-                new ItemBuilder(Material.SNOW_BALL).setName(ChatColor.BOLD + Constants.SNOWBALL_GIZMO).createItem());
+        super(Constants.SNOWBALL_GIZMO, Constants.SNOWBALL_GIZMO_COST, new ItemBuilder(Material.SNOW_BALL).setName(ChatColor.BOLD + Constants.SNOWBALL_GIZMO).createItem());
     }
 
     @EventHandler
@@ -56,7 +55,7 @@ public class SnowballGizmo extends Gizmo {
 
     @Override
     public void clickAction(Menu menu, Player player) {
-        GizmoUtil.checkAndBuyGizmo(player, this.getCost(), this.getItem());
+        GizmoUtil.checkAndBuyGizmo(player, this, this.getItem());
     }
 
     @Override

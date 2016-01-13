@@ -2,13 +2,8 @@ package me.itselliott.gizmos;
 
 import me.itselliott.gizmos.gizmo.GizmoRegistry;
 import me.itselliott.gizmos.inventory.MenuHandler;
-import me.itselliott.gizmos.inventory.menus.GizmoMenu;
 import me.itselliott.gizmos.raindrops.RaindropHandler;
 import me.itselliott.gizmos.raindrops.RaindropScoreboard;
-import me.itselliott.gizmos.utils.Constants;
-import me.itselliott.gizmos.utils.ItemBuilder;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,7 +31,7 @@ public class Gizmos extends JavaPlugin implements Listener {
         instance = this;
         this.getServer().getPluginManager().registerEvents(this, this);
         this.registry = new GizmoRegistry();
-        this.registry.registerLoaders(); // Registers all GizmoLoaders which trigger the gizmos when used
+        this.registry.registerLoaders();
         this.raindropHandler = new RaindropHandler(this);
         this.menuHandler = new MenuHandler();
     }
@@ -53,13 +48,15 @@ public class Gizmos extends JavaPlugin implements Listener {
         return instance;
     }
 
+    /**
+     * @return the GizmoRegistry
+     */
+    public GizmoRegistry getRegistry() {
+        return this.registry;
+    }
 
     public RaindropHandler getRaindropHandler() {
         return this.raindropHandler;
-    }
-
-    public GizmoRegistry getRegistry() {
-        return this.registry;
     }
 
     public void registerListener(Listener listener) {

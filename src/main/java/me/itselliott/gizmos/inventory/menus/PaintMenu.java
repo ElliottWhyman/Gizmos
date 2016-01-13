@@ -1,6 +1,7 @@
 package me.itselliott.gizmos.inventory.menus;
 
 import me.itselliott.gizmos.gizmo.gizmos.paintGun.Paint;
+import me.itselliott.gizmos.gizmo.gizmos.paintGun.PaintGizmo;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.inventory.interactables.clickables.Clickable;
 import me.itselliott.gizmos.utils.Constants;
@@ -54,7 +55,7 @@ public class PaintMenu extends Menu {
                 @EventHandler
                 public void action(InventoryClickEvent event) {
                     if (event.getCurrentItem().equals(paint.getItemStack())) {
-                        GizmoUtil.checkAndBuyGizmo(event.getActor(), paint.getCost(), paint.getItemStack());
+                        GizmoUtil.checkAndBuyGizmo(event.getActor(), new PaintGizmo(paint), paint.getItemStack());
                         event.setCancelled(true);
                     }
                 }

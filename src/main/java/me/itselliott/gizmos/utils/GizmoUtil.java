@@ -28,9 +28,9 @@ public class GizmoUtil {
         playerGizmos.remove(player.getName());
     }
 
-    public static void checkAndBuyGizmo(Player player, int cost, ItemStack itemStack) {
-        if (Gizmos.get().getRaindropHandler().canAfford(player.getUniqueId(), cost)) {
-            new ConfirmationMenu(Gizmos.get(), cost, itemStack).open(player);
+    public static void checkAndBuyGizmo(Player player, Gizmo gizmo, ItemStack itemStack) {
+        if (Gizmos.get().getRaindropHandler().canAfford(player.getUniqueId(), gizmo.getCost())) {
+            new ConfirmationMenu(Gizmos.get(), gizmo, itemStack).open(player);
         } else player.sendMessage(ChatColor.RED + "Insufficient Funds");
     }
 

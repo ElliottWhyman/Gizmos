@@ -33,8 +33,7 @@ public class RaindropBombGizmo extends Gizmo {
     private int[] taskIDs = new int[2];
 
     public RaindropBombGizmo() {
-        super(Constants.RAINDROP_BOMB, Constants.RAINDROP_BOMB_COST,
-                new ItemBuilder(Material.TNT).setName(ChatColor.RED + Constants.RAINDROP_BOMB).createItem());
+        super(Constants.RAINDROP_BOMB, Constants.RAINDROP_BOMB_COST, new ItemBuilder(Material.TNT).setName(ChatColor.RED + Constants.RAINDROP_BOMB).createItem());
     }
 
     @EventHandler
@@ -128,7 +127,7 @@ public class RaindropBombGizmo extends Gizmo {
 
     @Override
     public void clickAction(Menu menu, Player player) {
-        GizmoUtil.checkAndBuyGizmo(player, this.getCost(), this.getItem());
+        GizmoUtil.checkAndBuyGizmo(player, this, this.getItem());
     }
 
     @Override

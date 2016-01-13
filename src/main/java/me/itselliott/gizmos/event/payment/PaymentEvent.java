@@ -16,13 +16,13 @@ public class PaymentEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
     private Player player;
-    private int cost;
+    private Gizmo gizmo;
     private ItemStack item;
     private boolean accepted;
 
-    public PaymentEvent(Player player, int cost, ItemStack item, boolean accepted) {
+    public PaymentEvent(Player player, Gizmo gizmo, ItemStack item, boolean accepted) {
         this.player = player;
-        this.cost = cost;
+        this.gizmo = gizmo;
         this.item = item;
         this.accepted = accepted;
     }
@@ -31,8 +31,8 @@ public class PaymentEvent extends Event {
         return this.player;
     }
 
-    public int getCost() {
-        return this.cost;
+    public Gizmo getGizmo() {
+        return this.gizmo;
     }
 
     public ItemStack getItem() {

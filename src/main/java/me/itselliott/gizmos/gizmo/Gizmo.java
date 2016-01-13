@@ -51,7 +51,7 @@ public abstract class Gizmo implements Listener {
      */
     public void buy(Player player, Gizmo gizmo) {
         if (Gizmos.get().getRaindropHandler().canAfford(player.getUniqueId(), this.cost)) {
-            new ConfirmationMenu(Gizmos.get(), this.cost, this.item).open(player);
+            new ConfirmationMenu(Gizmos.get(), gizmo, this.item).open(player);
         }
     }
 

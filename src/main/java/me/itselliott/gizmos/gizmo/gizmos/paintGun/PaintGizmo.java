@@ -28,13 +28,17 @@ public class PaintGizmo extends Gizmo {
 
     private boolean toggle;
     private Player player;
-    private ItemStack block;
+    private Paint paint;
     private HashMap<Location, Material> blocks;
 
-    public PaintGizmo(ItemStack block) {
-        super(Constants.PAINT_GIZMO, Constants.PAINT_GIZMO_COST,
-                new ItemBuilder(Material.STAINED_CLAY).setName(ChatColor.RED + Constants.PAINT_GIZMO).createItem());
-        this.block = block;
+    public PaintGizmo() {
+        super(Constants.PAINT_GIZMO, Constants.PAINT_GIZMO_COST, new ItemBuilder(Material.STAINED_CLAY).setName(ChatColor.RED + Constants.PAINT_GIZMO).createItem());
+        this.paint = new Paint(new ItemBuilder(Material.STAINED_CLAY).createItem(), 0);
+    }
+
+    public PaintGizmo(Paint paint) {
+        super(Constants.PAINT_GIZMO, Constants.PAINT_GIZMO_COST + paint.getCost(), new ItemBuilder(Material.STAINED_CLAY).setName(ChatColor.RED + Constants.PAINT_GIZMO).createItem());
+        this.paint = paint;
     }
 
     @EventHandler
@@ -73,8 +77,8 @@ public class PaintGizmo extends Gizmo {
     }
 
     private void setBlock(final Block block, final Material oldType, final byte data) {
-        block.setType(this.block.getType());
-        block.setData((byte) this.block.getDurability());
+        block.setType(this.paint.getItemStack().getType());
+        block.setData((byte) this.paint.getItemStack().getDurability());
         Bukkit.getScheduler().scheduleSyncDelayedTask(Gizmos.get(), new Runnable() {
             @Override
             public void run() {
@@ -82,6 +86,10 @@ public class PaintGizmo extends Gizmo {
                 block.setData(data);
             }
         }, 2 * 20);
+    }
+
+    public void setPaint(Paint paint) {
+        this.paint = paint;
     }
 
     @Override
