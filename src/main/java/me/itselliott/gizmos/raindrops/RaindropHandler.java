@@ -1,7 +1,7 @@
 package me.itselliott.gizmos.raindrops;
 
 import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.event.raindrop.RaindropReceiveEvent;
+import me.itselliott.gizmos.event.raindrop.RaindropUpdateEvent;
 import me.itselliott.gizmos.event.raindrop.RaindropEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,7 +27,6 @@ public class RaindropHandler implements Listener {
         this.raindrops = new HashMap<>();
         this.plugin.registerListener(this);
     }
-
     public HashMap<UUID, Integer> getRaindrops() {
         return raindrops;
     }
@@ -49,17 +48,15 @@ public class RaindropHandler implements Listener {
     }
 
     @EventHandler
-    public void onRaindropRecieve(RaindropReceiveEvent event) {
-        event.getPlayer().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "+" + event.getAmount() + ChatColor.RESET + "" + ChatColor.DARK_PURPLE + " | " + ChatColor.WHITE + "Raindrops Received");
-        event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 0);
-
-        Bukkit.getPluginManager().callEvent(new RaindropEvent(event.getPlayer()));
-    }
-
-    @EventHandler
-    public void onRaindropUpdate(RaindropEvent event) {
+    public void onRaindropRecieve(RaindropUpdateEvent event) {
+        if (event.getAmount() > 0) {
+            event.getPlayer().sendMessage(ChatColor.AQUA + "" + event.getAmount() + ChatColor.RESET + "" + ChatColor.DARK_PURPLE + " | " + ChatColor.WHITE + "Raindrops Received");
+            event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 0);
+        } else if (event.getAmount() < 0) {
+            event.getPlayer().sendMessage(ChatColor.AQUA + "" + event.getAmount() + ChatColor.RESET + "" + ChatColor.DARK_PURPLE + " | " + ChatColor.RED + "Raindrops Removed");
+            event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ANVIL_LAND, 1, 0);
+        }
         // Updates the scoreboard to show new raindrop count
         this.raindropScoreboards.get(event.getPlayer().getUniqueId()).update();
     }
-
 }

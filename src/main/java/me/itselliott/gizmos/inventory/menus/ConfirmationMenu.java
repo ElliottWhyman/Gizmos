@@ -2,7 +2,7 @@ package me.itselliott.gizmos.inventory.menus;
 
 import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.event.payment.PaymentEvent;
-import me.itselliott.gizmos.event.raindrop.RaindropReceiveEvent;
+import me.itselliott.gizmos.event.raindrop.RaindropUpdateEvent;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.inventory.interactables.clickables.Clickable;
 import me.itselliott.gizmos.utils.Constants;
@@ -65,7 +65,7 @@ public class ConfirmationMenu extends Menu {
         // Subtract cost of gizmo
         this.plugin.getRaindropHandler().setRaindrops(player.getUniqueId(), this.plugin.getRaindropHandler().getRaindrops(player.getUniqueId()) - cost);
         // Call events
-        Bukkit.getPluginManager().callEvent(new RaindropReceiveEvent(player, -cost));
+        Bukkit.getPluginManager().callEvent(new RaindropUpdateEvent(player, -cost));
         Bukkit.getPluginManager().callEvent(new PaymentEvent(player, this.cost, this.item, true));
     }
 

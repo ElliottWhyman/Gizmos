@@ -6,13 +6,13 @@ import org.bukkit.event.HandlerList;
 /**
  * Created by Elliott on 05/12/2015.
  */
-public class RaindropReceiveEvent extends RaindropEvent {
+public class RaindropUpdateEvent extends RaindropEvent {
 
     private static final HandlerList handlers = new HandlerList();
 
     private int amount;
 
-    public RaindropReceiveEvent(Player player, int amount) {
+    public RaindropUpdateEvent(Player player, int amount) {
         super(player);
         this.amount = amount;
     }

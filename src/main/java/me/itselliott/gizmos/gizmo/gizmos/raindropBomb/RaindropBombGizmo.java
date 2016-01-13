@@ -2,10 +2,9 @@ package me.itselliott.gizmos.gizmo.gizmos.raindropBomb;
 
 import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.event.gizmo.GizmoUseEvent;
-import me.itselliott.gizmos.event.raindrop.RaindropReceiveEvent;
+import me.itselliott.gizmos.event.raindrop.RaindropUpdateEvent;
 import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.inventory.Menu;
-import me.itselliott.gizmos.inventory.menus.ConfirmationMenu;
 import me.itselliott.gizmos.utils.*;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
@@ -118,7 +117,7 @@ public class RaindropBombGizmo extends Gizmo {
             // Gives player raindrops on pickup
             Gizmos.get().getRaindropHandler().setRaindrops(event.getPlayer().getUniqueId(), Gizmos.get().getRaindropHandler().getRaindrops(event.getPlayer().getUniqueId()) + 1);
             // Call raindrop event
-            RaindropReceiveEvent raindropReceiveEvent = new RaindropReceiveEvent(event.getPlayer(), 10);
+            RaindropUpdateEvent raindropReceiveEvent = new RaindropUpdateEvent(event.getPlayer(), 10);
             Bukkit.getPluginManager().callEvent(raindropReceiveEvent);
 
             // Remove item from world
