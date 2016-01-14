@@ -10,7 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import static me.itselliott.gizmos.utils.GizmoConstants.PAINT;
+import static me.itselliott.gizmos.utils.constants.GizmoConstants.PAINT;
 
 import java.util.Arrays;
 import java.util.List;

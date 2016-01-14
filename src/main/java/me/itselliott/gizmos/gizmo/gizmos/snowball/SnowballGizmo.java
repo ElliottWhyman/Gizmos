@@ -4,7 +4,6 @@ import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.event.gizmo.GizmoUseEvent;
 import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.inventory.Menu;
-import me.itselliott.gizmos.utils.GizmoConstants;
 import me.itselliott.gizmos.utils.GizmoUtil;
 import me.itselliott.gizmos.utils.ItemBuilder;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityEquipment;
@@ -20,7 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-import static me.itselliott.gizmos.utils.GizmoConstants.SNOWBALL;
+import static me.itselliott.gizmos.utils.constants.GizmoConstants.SNOWBALL;
 
 /**
  * Created by Elliott on 06/12/2015.

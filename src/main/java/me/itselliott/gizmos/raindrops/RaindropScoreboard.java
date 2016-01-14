@@ -1,8 +1,7 @@
 package me.itselliott.gizmos.raindrops;
 
 import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.utils.GizmoConstants;
-import me.itselliott.gizmos.utils.StringConstants;
+import me.itselliott.gizmos.utils.constants.StringConstants;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

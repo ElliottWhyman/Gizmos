@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.util.Vector;
 
-import static me.itselliott.gizmos.utils.GizmoConstants.RAINDROP_BOMB;
+import static me.itselliott.gizmos.utils.constants.GizmoConstants.RAINDROP_BOMB;
 
 /**
  * Created by Elliott on 04/12/2015.

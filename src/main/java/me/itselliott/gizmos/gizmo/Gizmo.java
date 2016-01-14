@@ -3,12 +3,13 @@ package me.itselliott.gizmos.gizmo;
 import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.inventory.menus.ConfirmationMenu;
-import me.itselliott.gizmos.utils.GizmoConstants;
+import me.itselliott.gizmos.utils.ItemBuilder;
+import me.itselliott.gizmos.utils.constants.GizmoConstants;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.UUID;
+import java.util.List;
 
 /**
  * Created by Elliott on 04/12/2015.
@@ -17,18 +18,21 @@ public abstract class Gizmo implements Listener {
 
     private int cost;
     private String name;
+    private List<String> description;
     private ItemStack item;
 
     public Gizmo(GizmoConstants gizmoConstants, ItemStack item) {
         this.cost = gizmoConstants.cost();
         this.name = gizmoConstants.string();
-        this.item = item;
+        this.description = gizmoConstants.description();
+        this.item = new ItemBuilder(item).setLore(this.description).createItem();
     }
 
-    public Gizmo(String name, int cost, ItemStack item) {
+    public Gizmo(String name, int cost, List<String> description, ItemStack item) {
         this.cost = cost;
         this.name = name;
-        this.item = item;
+        this.description = description;
+        this.item = new ItemBuilder(item).setLore(this.description).createItem();
     }
 
     public int getCost() {
@@ -41,6 +45,10 @@ public abstract class Gizmo implements Listener {
 
     public String getName() {
         return this.name;
+    }
+
+    public List<String> getDescription() {
+        return this.description;
     }
 
     public ItemStack getItem() {

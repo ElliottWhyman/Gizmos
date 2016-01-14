@@ -1,4 +1,4 @@
-package me.itselliott.gizmos.utils;
+package me.itselliott.gizmos.utils.constants;
 
 /**
  * Created by Elliott2 on 14/01/2016.

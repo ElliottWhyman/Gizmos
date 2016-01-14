@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import static me.itselliott.gizmos.utils.GizmoConstants.PAINT;
+import static me.itselliott.gizmos.utils.constants.GizmoConstants.PAINT;
 
 import java.util.HashMap;
 
@@ -37,7 +37,7 @@ public class PaintGizmo extends Gizmo {
     }
 
     public PaintGizmo(Paint paint) {
-        super(PAINT.name(), PAINT.cost() + paint.getCost(), new ItemBuilder(Material.STAINED_CLAY).setName(ChatColor.RED + PAINT.string()).createItem());
+        super(PAINT.name(), PAINT.cost() + paint.getCost(), PAINT.description(), new ItemBuilder(Material.STAINED_CLAY).setName(ChatColor.RED + PAINT.string()).createItem());
         this.paint = paint;
     }
 
