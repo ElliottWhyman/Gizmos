@@ -5,7 +5,6 @@ import me.itselliott.gizmos.event.gizmo.GizmoUseEvent;
 import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.inventory.menus.PaintMenu;
-import me.itselliott.gizmos.utils.Constants;
 import me.itselliott.gizmos.utils.GizmoUtil;
 import me.itselliott.gizmos.utils.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -17,7 +16,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.ItemStack;
+
+import static me.itselliott.gizmos.utils.GizmoConstants.PAINT;
 
 import java.util.HashMap;
 
@@ -32,12 +32,12 @@ public class PaintGizmo extends Gizmo {
     private HashMap<Location, Material> blocks;
 
     public PaintGizmo() {
-        super(Constants.PAINT_GIZMO, Constants.PAINT_GIZMO_COST, new ItemBuilder(Material.STAINED_CLAY).setName(ChatColor.RED + Constants.PAINT_GIZMO).createItem());
+        super(PAINT, new ItemBuilder(Material.STAINED_CLAY).setName(ChatColor.RED + PAINT.string()).createItem());
         this.paint = new Paint(new ItemBuilder(Material.STAINED_CLAY).createItem(), 0);
     }
 
     public PaintGizmo(Paint paint) {
-        super(Constants.PAINT_GIZMO, Constants.PAINT_GIZMO_COST + paint.getCost(), new ItemBuilder(Material.STAINED_CLAY).setName(ChatColor.RED + Constants.PAINT_GIZMO).createItem());
+        super(PAINT.name(), PAINT.cost() + paint.getCost(), new ItemBuilder(Material.STAINED_CLAY).setName(ChatColor.RED + PAINT.string()).createItem());
         this.paint = paint;
     }
 

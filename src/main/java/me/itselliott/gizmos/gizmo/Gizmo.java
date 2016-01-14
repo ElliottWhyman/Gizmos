@@ -3,6 +3,7 @@ package me.itselliott.gizmos.gizmo;
 import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.inventory.menus.ConfirmationMenu;
+import me.itselliott.gizmos.utils.GizmoConstants;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -17,6 +18,12 @@ public abstract class Gizmo implements Listener {
     private int cost;
     private String name;
     private ItemStack item;
+
+    public Gizmo(GizmoConstants gizmoConstants, ItemStack item) {
+        this.cost = gizmoConstants.cost();
+        this.name = gizmoConstants.string();
+        this.item = item;
+    }
 
     public Gizmo(String name, int cost, ItemStack item) {
         this.cost = cost;

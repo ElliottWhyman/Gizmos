@@ -4,7 +4,7 @@ import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.event.gizmo.GizmoUseEvent;
 import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.inventory.Menu;
-import me.itselliott.gizmos.utils.Constants;
+import me.itselliott.gizmos.utils.GizmoConstants;
 import me.itselliott.gizmos.utils.GizmoUtil;
 import me.itselliott.gizmos.utils.ItemBuilder;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityEquipment;
@@ -20,6 +20,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
+import static me.itselliott.gizmos.utils.GizmoConstants.SNOWBALL;
+
 /**
  * Created by Elliott on 06/12/2015.
  */
@@ -28,7 +30,7 @@ public class SnowballGizmo extends Gizmo {
     private Player player;
 
     public SnowballGizmo() {
-        super(Constants.SNOWBALL_GIZMO, Constants.SNOWBALL_GIZMO_COST, new ItemBuilder(Material.SNOW_BALL).setName(ChatColor.BOLD + Constants.SNOWBALL_GIZMO).createItem());
+        super(SNOWBALL, new ItemBuilder(Material.SNOW_BALL).setName(ChatColor.BOLD + SNOWBALL.name()).createItem());
     }
 
     @EventHandler

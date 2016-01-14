@@ -8,9 +8,10 @@ import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.inventory.interactables.clickables.Clickable;
 import me.itselliott.gizmos.inventory.interactables.useables.Usable;
-import me.itselliott.gizmos.utils.Constants;
+import me.itselliott.gizmos.utils.GizmoConstants;
 import me.itselliott.gizmos.utils.GizmoUtil;
 import me.itselliott.gizmos.utils.ItemBuilder;
+import me.itselliott.gizmos.utils.StringConstants;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -30,7 +31,7 @@ public class ConfirmationMenu extends Menu {
     private ItemStack item;
 
     public ConfirmationMenu(Gizmos plugin, Gizmo gizmo, ItemStack item) {
-        super(Constants.CONFIRMATION_MENU, 1);
+        super(StringConstants.CONFIRMATION.name(), 1);
         this.plugin = plugin;
         this.gizmo = gizmo;
         this.item = item;

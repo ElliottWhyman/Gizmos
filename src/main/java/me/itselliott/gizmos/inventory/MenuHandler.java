@@ -3,8 +3,9 @@ package me.itselliott.gizmos.inventory;
 import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.inventory.interactables.useables.Usable;
 import me.itselliott.gizmos.inventory.menus.GizmoMenu;
-import me.itselliott.gizmos.utils.Constants;
+import me.itselliott.gizmos.utils.GizmoConstants;
 import me.itselliott.gizmos.utils.ItemBuilder;
+import me.itselliott.gizmos.utils.StringConstants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public class MenuHandler implements Listener {
         Player player = event.getPlayer();
         player.getInventory().clear();
         // Gives player item to access the gizmo menu with
-        player.getInventory().setItem(0, new Usable(new ItemBuilder(Material.GHAST_TEAR).setName(ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + Constants.GIZMOS).createItem()) {
+        player.getInventory().setItem(0, new Usable(new ItemBuilder(Material.GHAST_TEAR).setName(ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + StringConstants.GIZMOS).createItem()) {
             @Override
             @EventHandler
             public void action(PlayerInteractEvent event) {

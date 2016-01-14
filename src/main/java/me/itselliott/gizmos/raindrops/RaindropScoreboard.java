@@ -1,7 +1,8 @@
 package me.itselliott.gizmos.raindrops;
 
 import me.itselliott.gizmos.Gizmos;
-import me.itselliott.gizmos.utils.Constants;
+import me.itselliott.gizmos.utils.GizmoConstants;
+import me.itselliott.gizmos.utils.StringConstants;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -23,13 +24,13 @@ public class RaindropScoreboard {
         this.scoreboard = this.manager.getNewScoreboard();
         this.objective = this.scoreboard.registerNewObjective("raindrops", "dummy");
         this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        this.objective.setDisplayName(ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + Constants.RAINDROPS);
-        Score score = this.objective.getScore(ChatColor.AQUA + Constants.RAINDROPS);
+        this.objective.setDisplayName(ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + StringConstants.RAINDROPS.name());
+        Score score = this.objective.getScore(ChatColor.AQUA + StringConstants.RAINDROPS.name());
         score.setScore(raindrops);
     }
 
     public void update() {
-        this.objective.getScore(ChatColor.AQUA + Constants.RAINDROPS).setScore(Gizmos.get().getRaindropHandler().getRaindrops(this.player.getUniqueId()));
+        this.objective.getScore(ChatColor.AQUA + StringConstants.RAINDROPS.name()).setScore(Gizmos.get().getRaindropHandler().getRaindrops(this.player.getUniqueId()));
         this.player.setScoreboard(this.scoreboard);
     }
 

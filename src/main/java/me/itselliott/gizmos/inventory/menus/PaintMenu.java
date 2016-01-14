@@ -4,12 +4,13 @@ import me.itselliott.gizmos.gizmo.gizmos.paintGun.Paint;
 import me.itselliott.gizmos.gizmo.gizmos.paintGun.PaintGizmo;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.inventory.interactables.clickables.Clickable;
-import me.itselliott.gizmos.utils.Constants;
 import me.itselliott.gizmos.utils.GizmoUtil;
 import me.itselliott.gizmos.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
+
+import static me.itselliott.gizmos.utils.GizmoConstants.PAINT;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,27 +21,27 @@ import java.util.List;
 public class PaintMenu extends Menu {
 
     private List<Paint> paints = Arrays.asList(
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)1).setName(Constants.PAINT_GIZMO).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)2).setName(Constants.PAINT_GIZMO).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)3).setName(Constants.PAINT_GIZMO).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)4).setName(Constants.PAINT_GIZMO).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)5).setName(Constants.PAINT_GIZMO).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)6).setName(Constants.PAINT_GIZMO).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)7).setName(Constants.PAINT_GIZMO).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)8).setName(Constants.PAINT_GIZMO).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)9).setName(Constants.PAINT_GIZMO).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)10).setName(Constants.PAINT_GIZMO).createItem(), 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)11).setName(Constants.PAINT_GIZMO).createItem(), 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)12).setName(Constants.PAINT_GIZMO).createItem(), 200),
-            new Paint(new ItemBuilder(Material.GOLD_BLOCK).setName(Constants.PAINT_GIZMO).createItem()                       , 1000),
-            new Paint(new ItemBuilder(Material.DIAMOND_BLOCK).setName(Constants.PAINT_GIZMO).createItem()                    , 1500)
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)1).setName(PAINT.name()).createItem() , 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)2).setName(PAINT.name()).createItem() , 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)3).setName(PAINT.name()).createItem() , 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)4).setName(PAINT.name()).createItem() , 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)5).setName(PAINT.name()).createItem() , 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)6).setName(PAINT.name()).createItem() , 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)7).setName(PAINT.name()).createItem() , 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)8).setName(PAINT.name()).createItem() , 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)9).setName(PAINT.name()).createItem() , 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)10).setName(PAINT.name()).createItem(), 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)11).setName(PAINT.name()).createItem(), 200),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)12).setName(PAINT.name()).createItem(), 200),
+            new Paint(new ItemBuilder(Material.GOLD_BLOCK).setName(PAINT.name()).createItem()                       , 1000),
+            new Paint(new ItemBuilder(Material.DIAMOND_BLOCK).setName(PAINT.name()).createItem()                    , 1500)
 
     );
 
     private Menu parent;
 
     public PaintMenu(Menu parent) {
-        super(Constants.PAINT_MENU, 7);
+        super(PAINT.name(), 7);
         this.parent = parent;
         this.setRows((int) Math.ceil((double) (this.paints.size() + 1) / 9));
         this.populateMenu();

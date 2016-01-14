@@ -4,7 +4,8 @@ import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.inventory.interactables.clickables.Clickable;
-import me.itselliott.gizmos.utils.Constants;
+import me.itselliott.gizmos.utils.GizmoConstants;
+import me.itselliott.gizmos.utils.StringConstants;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -20,7 +21,7 @@ public class GizmoMenu extends Menu {
     private Menu menu;
 
     public GizmoMenu() {
-        super(Constants.GIZMOS, 1);
+        super(StringConstants.GIZMOS.name(), 1);
         this.gizmos = new HashSet<>();
         this.gizmos.addAll(Gizmos.get().getRegistry().getGizmos());
         this.menu = this;

@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.util.Vector;
 
+import static me.itselliott.gizmos.utils.GizmoConstants.RAINDROP_BOMB;
 
 /**
  * Created by Elliott on 04/12/2015.
@@ -33,7 +34,7 @@ public class RaindropBombGizmo extends Gizmo {
     private int[] taskIDs = new int[2];
 
     public RaindropBombGizmo() {
-        super(Constants.RAINDROP_BOMB, Constants.RAINDROP_BOMB_COST, new ItemBuilder(Material.TNT).setName(ChatColor.RED + Constants.RAINDROP_BOMB).createItem());
+        super(RAINDROP_BOMB, new ItemBuilder(Material.TNT).setName(ChatColor.RED + RAINDROP_BOMB.string()).createItem());
     }
 
     @EventHandler
