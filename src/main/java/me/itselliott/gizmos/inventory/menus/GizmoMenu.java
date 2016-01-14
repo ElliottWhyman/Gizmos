@@ -8,7 +8,9 @@ import me.itselliott.gizmos.utils.constants.StringConstants;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,12 +18,12 @@ import java.util.Set;
  */
 public class GizmoMenu extends Menu {
 
-    private Set<Gizmo> gizmos;
+    private List<Gizmo> gizmos;
     private Menu menu;
 
     public GizmoMenu() {
         super(StringConstants.GIZMOS.name(), 1);
-        this.gizmos = new HashSet<>();
+        this.gizmos = new ArrayList<>();
         this.gizmos.addAll(Gizmos.get().getRegistry().getGizmos());
         this.menu = this;
         this.populateMenu();

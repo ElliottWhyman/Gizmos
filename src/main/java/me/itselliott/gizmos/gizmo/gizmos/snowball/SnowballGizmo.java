@@ -40,6 +40,7 @@ public class SnowballGizmo extends Gizmo {
     // Current issue with sending the equipment packet for a helmet - works with item in hand.
     private void sendEquipmentPacket(Player player, Player reciever) {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityEquipment(reciever.getEntityId(),0, CraftItemStack.asNMSCopy(new ItemStack(Material.CHAINMAIL_HELMET))));
+        GizmoUtil.remove(player);
     }
 
     @EventHandler

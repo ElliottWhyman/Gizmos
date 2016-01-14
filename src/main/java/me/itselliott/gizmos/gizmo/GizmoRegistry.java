@@ -1,6 +1,7 @@
 package me.itselliott.gizmos.gizmo;
 
 import me.itselliott.gizmos.event.raindrop.RaindropEvent;
+import me.itselliott.gizmos.gizmo.gizmos.downpour.DownpourGizmo;
 import me.itselliott.gizmos.gizmo.gizmos.paintGun.Paint;
 import me.itselliott.gizmos.gizmo.gizmos.paintGun.PaintGizmo;
 import me.itselliott.gizmos.gizmo.gizmos.raindropBomb.RaindropBombGizmo;
@@ -15,15 +16,16 @@ import java.util.*;
 public class GizmoRegistry {
 
     private Set<Class<? extends Gizmo>> gizmosClasses;
-    private Set<Gizmo> gizmos;
+    private List<Gizmo> gizmos;
 
     public GizmoRegistry() {
-        this.gizmos = new HashSet<>();
+        this.gizmos = new ArrayList<>();
         this.gizmosClasses = new HashSet<>();
         this.gizmosClasses.addAll(Arrays.asList(
                 RaindropBombGizmo.class,
                 PaintGizmo.class,
-                SnowballGizmo.class
+                SnowballGizmo.class,
+                DownpourGizmo.class
         ));
     }
 
@@ -31,7 +33,6 @@ public class GizmoRegistry {
         for (Class<? extends Gizmo> gizmo : this.gizmosClasses) {
             try {
                 Gizmo gizmoInstance = gizmo.newInstance();
-                gizmoInstance.registerListener();
                 this.gizmos.add(gizmoInstance);
                 Bukkit.getLogger().info("Gizmo Registered " + gizmoInstance.getName());
             } catch (InstantiationException | IllegalAccessException e) {
@@ -40,7 +41,7 @@ public class GizmoRegistry {
         }
     }
 
-    public Set<Gizmo> getGizmos() {
+    public List<Gizmo> getGizmos() {
         return this.gizmos;
     }
 

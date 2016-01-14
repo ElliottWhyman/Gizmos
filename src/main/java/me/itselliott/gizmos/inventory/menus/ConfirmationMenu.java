@@ -69,7 +69,7 @@ public class ConfirmationMenu extends Menu {
             @Override
             @EventHandler
             public void action(PlayerInteractEvent event) {
-                if (event.getItem().equals(this.getItemStack()) && event.getActor().equals(player)) {
+                if (event.getItem().equals(this.getItemStack()) && event.getActor().equals(player) && !GizmoUtil.hasGizmos(event.getPlayer())) {
                     gizmo.registerListener();
                     // Put player using the gizmo in global map
                     GizmoUtil.playerGizmos.put(event.getActor().getName(), gizmo);

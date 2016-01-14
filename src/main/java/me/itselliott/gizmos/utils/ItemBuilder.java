@@ -61,7 +61,8 @@ public class ItemBuilder {
     }
 
     public ItemStack createItem() {
-        this.itemStack = new ItemStack(this.material, this.amount, this.damage);
+        if (itemStack == null)
+            this.itemStack = new ItemStack(this.material, this.amount, this.damage);
         ItemMeta itemMeta = this.itemStack.getItemMeta();
         if (this.name != null)
             itemMeta.setDisplayName(this.name);

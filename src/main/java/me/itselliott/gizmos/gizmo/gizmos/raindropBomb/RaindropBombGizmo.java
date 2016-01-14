@@ -2,7 +2,6 @@ package me.itselliott.gizmos.gizmo.gizmos.raindropBomb;
 
 import me.itselliott.gizmos.Gizmos;
 import me.itselliott.gizmos.event.gizmo.GizmoUseEvent;
-import me.itselliott.gizmos.event.raindrop.RaindropUpdateEvent;
 import me.itselliott.gizmos.gizmo.Gizmo;
 import me.itselliott.gizmos.inventory.Menu;
 import me.itselliott.gizmos.utils.*;
@@ -12,14 +11,18 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import static me.itselliott.gizmos.utils.constants.GizmoConstants.RAINDROP_BOMB;
 
 /**
+ * TODO: Re-implement hologram countdown
+ *
  * Created by Elliott on 04/12/2015.
  */
 public class RaindropBombGizmo extends Gizmo {
@@ -29,9 +32,7 @@ public class RaindropBombGizmo extends Gizmo {
     private final int radius = 10; // 10 Blocks
     private Player player;
 
-    boolean cancel = false;
-
-    private int[] taskIDs = new int[2];
+    private int taskIds[] = new int[2];
 
     public RaindropBombGizmo() {
         super(RAINDROP_BOMB, new ItemBuilder(Material.TNT).setName(ChatColor.RED + RAINDROP_BOMB.string()).createItem());
@@ -42,6 +43,7 @@ public class RaindropBombGizmo extends Gizmo {
         if (!event.isCancelled() && event.getGizmo() == this) {
             this.player = event.getPlayer();
             this.spawnTNT(this.player);
+            this.disableReaptingTasks();
         }
     }
 
@@ -50,80 +52,61 @@ public class RaindropBombGizmo extends Gizmo {
         TNTPrimed tntPrimed = location.getWorld().spawn(location, TNTPrimed.class);
         tntPrimed.setFuseTicks(this.timeInTicks);
         tntPrimed.setYield(0);
-        final Hologram countdown = new Hologram(location.setY(location.getY() - 0.5), ChatColor.BOLD + "" + ChatColor.RED + Time.formatTime(5, 0));
-        this.taskIDs[0] = Bukkit.getScheduler().scheduleSyncRepeatingTask(Gizmos.get(), new Runnable() {
-            int sec = time;
-            int ms = 0;
-            int explodeTime = 0;
-
-            @Override
-            public void run() {
-                if (sec <= 0) {
-                    explodeTime++;
-                    explode(location);
-                    countdown.remove();
-                    if (explodeTime >= 10) {
-                        cancelTask(0,1);
-                        cancel = true;
-                    }
-                }
-                if (ms <= 0) {
-                    ms = 10;
-                    sec--;
-                }
-                ms--;
-                countdown.setText(ChatColor.RED + Time.formatTime(sec, ms));
-            }
-        }, 0, 2);
+        tntPrimed.setMetadata("raindrop-bomb", new FixedMetadataValue(Gizmos.get(), true));
     }
 
-    private void cancelTask(int... indexs) {
-        for (int index : indexs) {
-            Bukkit.getScheduler().cancelTask(this.taskIDs[index]);
+    @EventHandler
+    public void onTntExplode(EntityExplodeEvent event) {
+        if (event.getActor() instanceof TNTPrimed && event.getActor().hasMetadata("raindrop-bomb")) {
+            this.explode(event.getLocation());
         }
     }
 
     private void explode(final Location location) {
         for (Player player : location.getWorld().getPlayers()) {
-            if (player.getLocation().distanceSquared(location) <= this.radius * this.radius) {
+            if (player.getLocation().distanceSquared(location) <= Math.pow(this.radius, 2)) {
                 // Plays a sound to nearby players
                 player.playSound(location, Sound.FIZZ, 1, 0);
             }
         }
-
-        // Spawn fireworks
-        Firework firework = location.getWorld().spawn(location, Firework.class);
-        FireworkMeta fireworkMeta = firework.getFireworkMeta();
-        fireworkMeta.addEffects(FireworkEffect.builder().withColor(Color.AQUA, Color.WHITE, Color.RED).with(FireworkEffect.Type.BALL_LARGE).build());
-        fireworkMeta.setPower(0);
-        firework.setFireworkMeta(fireworkMeta);
-
-        // Drops raindrops
-        this.taskIDs[1] = Bukkit.getScheduler().scheduleSyncRepeatingTask(Gizmos.get(), new Runnable() {
-            @Override
-            public void run() {
-                if (!cancel) {
-                    Item item = location.getWorld().dropItem(location, new ItemStack(Material.GHAST_TEAR, 1));
-                    item.setVelocity(Vector.getRandom());
-                }
-            }
-        }, 0, 2);
+        this.spawnFireworks(location);
+        this.dropRaindrops(location);
         GizmoUtil.remove(player);
     }
 
-    @EventHandler
-    public void onItemPickup(PlayerPickupItemEvent event) {
-        if (event.getItem().getItemStack().getType().equals(Material.GHAST_TEAR)) {
-            // Gives player raindrops on pickup
-            Gizmos.get().getRaindropHandler().setRaindrops(event.getPlayer().getUniqueId(), Gizmos.get().getRaindropHandler().getRaindrops(event.getPlayer().getUniqueId()) + 1);
-            // Call raindrop event
-            RaindropUpdateEvent raindropReceiveEvent = new RaindropUpdateEvent(event.getPlayer(), 10);
-            Bukkit.getPluginManager().callEvent(raindropReceiveEvent);
+    private void spawnFireworks(final Location location) {
+        this.taskIds[0] = Bukkit.getScheduler().scheduleSyncRepeatingTask(Gizmos.get(), new BukkitRunnable() {
+            @Override
+            public void run() {
+                Firework firework = location.getWorld().spawn(location, Firework.class);
+                FireworkMeta fireworkMeta = firework.getFireworkMeta();
+                fireworkMeta.addEffects(FireworkEffect.builder().withColor(Color.AQUA, Color.WHITE, Color.RED).with(FireworkEffect.Type.BALL_LARGE).build());
+                fireworkMeta.setPower(0);
+                firework.setFireworkMeta(fireworkMeta);
+            }
+        }, 0, 2);
+    }
 
-            // Remove item from world
-            event.setCancelled(true);
-            event.getItem().remove();
-        }
+    private void dropRaindrops(final Location location) {
+        this.taskIds[1] = Bukkit.getScheduler().scheduleSyncRepeatingTask(Gizmos.get(), new Runnable() {
+            @Override
+            public void run() {
+                Item item = location.getWorld().dropItem(location, new ItemStack(Material.GHAST_TEAR, 1));
+                item.setVelocity(Vector.getRandom());
+            }
+        }, 0, 2);
+    }
+
+    private void disableReaptingTasks() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (int i : taskIds) {
+                    Bukkit.getScheduler().cancelTask(i);
+                }
+            }
+        }.runTaskLater(Gizmos.get(), 20 + this.timeInTicks);
+
     }
 
     @Override
