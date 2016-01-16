@@ -23,6 +23,7 @@ public class DownpourGizmo extends Gizmo {
     public DownpourGizmo() {
         super(DOWNPOUR, new ItemBuilder(Material.GHAST_TEAR).setName(ChatColor.AQUA + DOWNPOUR.name()).createItem());
         this.radius = 3;
+        Gizmos.get().registerListener(this);
     }
 
     @EventHandler
@@ -60,8 +61,4 @@ public class DownpourGizmo extends Gizmo {
         GizmoUtil.checkAndBuyGizmo(player, this, this.getItem());
     }
 
-    @Override
-    public void registerListener() {
-        Gizmos.get().registerListener(this);
-    }
 }

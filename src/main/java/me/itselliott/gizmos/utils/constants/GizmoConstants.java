@@ -75,6 +75,22 @@ public enum GizmoConstants {
         public List<String> description() {
             return Collections.singletonList("Summon a Raindrop storm above you!");
         }
+    },
+    ANIMAL_GUN {
+        @Override
+        public int cost() {
+            return 1000;
+        }
+
+        @Override
+        public String string() {
+            return "Animal Gun Gizmo";
+        }
+
+        @Override
+        public List<String> description() {
+            return Collections.singletonList("Fire a super fast animal!");
+        }
     };
 
 

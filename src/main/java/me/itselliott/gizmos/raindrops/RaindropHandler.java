@@ -5,11 +5,9 @@ import me.itselliott.gizmos.event.raindrop.RaindropUpdateEvent;
 import me.itselliott.gizmos.event.raindrop.RaindropEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -62,18 +60,4 @@ public class RaindropHandler implements Listener {
         this.raindropScoreboards.get(event.getPlayer().getUniqueId()).update();
     }
 
-    @EventHandler
-    public void onItemPickup(PlayerPickupItemEvent event) {
-        if (event.getItem().getItemStack().getType().equals(Material.GHAST_TEAR)) {
-            // Gives player raindrops on pickup
-            Gizmos.get().getRaindropHandler().setRaindrops(event.getPlayer().getUniqueId(), Gizmos.get().getRaindropHandler().getRaindrops(event.getPlayer().getUniqueId()) + 1);
-            // Call raindrop event
-            RaindropUpdateEvent raindropReceiveEvent = new RaindropUpdateEvent(event.getPlayer(), 10);
-            Bukkit.getPluginManager().callEvent(raindropReceiveEvent);
-
-            // Remove item from world
-            event.setCancelled(true);
-            event.getItem().remove();
-        }
-    }
 }

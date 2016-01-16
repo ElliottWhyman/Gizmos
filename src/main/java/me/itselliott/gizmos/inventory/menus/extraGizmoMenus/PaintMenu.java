@@ -1,4 +1,4 @@
-package me.itselliott.gizmos.inventory.menus;
+package me.itselliott.gizmos.inventory.menus.extraGizmoMenus;
 
 import me.itselliott.gizmos.gizmo.gizmos.paintGun.Paint;
 import me.itselliott.gizmos.gizmo.gizmos.paintGun.PaintGizmo;
@@ -21,20 +21,19 @@ import java.util.List;
 public class PaintMenu extends Menu {
 
     private List<Paint> paints = Arrays.asList(
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)1).setName(PAINT.name()).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)2).setName(PAINT.name()).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)3).setName(PAINT.name()).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)4).setName(PAINT.name()).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)5).setName(PAINT.name()).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)6).setName(PAINT.name()).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)7).setName(PAINT.name()).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)8).setName(PAINT.name()).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)9).setName(PAINT.name()).createItem() , 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)10).setName(PAINT.name()).createItem(), 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)11).setName(PAINT.name()).createItem(), 200),
-            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)12).setName(PAINT.name()).createItem(), 200),
-            new Paint(new ItemBuilder(Material.GOLD_BLOCK).setName(PAINT.name()).createItem()                       , 1000),
-            new Paint(new ItemBuilder(Material.DIAMOND_BLOCK).setName(PAINT.name()).createItem()                    , 1500)
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)1).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)2).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)3).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)4).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)5).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)6).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)7).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)8).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)9).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)10).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.STAINED_CLAY).setDamage((short)11).createItem() , 200, PAINT.name()),
+            new Paint(new ItemBuilder(Material.GOLD_BLOCK).createItem()                       , 1000, PAINT.name()),
+            new Paint(new ItemBuilder(Material.DIAMOND_BLOCK).createItem()                    , 1500, PAINT.name())
 
     );
 

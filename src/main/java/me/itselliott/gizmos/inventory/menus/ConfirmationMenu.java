@@ -69,12 +69,13 @@ public class ConfirmationMenu extends Menu {
             @Override
             @EventHandler
             public void action(PlayerInteractEvent event) {
-                if (event.getItem().equals(this.getItemStack()) && event.getActor().equals(player) && !GizmoUtil.hasGizmos(event.getPlayer())) {
-                    gizmo.registerListener();
-                    // Put player using the gizmo in global map
-                    GizmoUtil.playerGizmos.put(event.getActor().getName(), gizmo);
-                    // Calls the event that triggers the gizmo
-                    Bukkit.getPluginManager().callEvent(new GizmoUseEvent(player, gizmo, player.getLocation()));
+                if (event.getItem() != null && event.getItem().equals(this.getItemStack()) && event.getActor().equals(player)) {
+                    if (!GizmoUtil.hasGizmos(event.getPlayer())) {
+                        // Put player using the gizmo in global map
+                        GizmoUtil.playerGizmos.put(event.getActor().getName(), gizmo);
+                        // Calls the event that triggers the gizmo
+                        Bukkit.getPluginManager().callEvent(new GizmoUseEvent(player, gizmo, player.getLocation()));
+                    }
                     event.setCancelled(true);
                 }
             }

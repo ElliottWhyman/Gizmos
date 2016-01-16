@@ -36,6 +36,7 @@ public class RaindropBombGizmo extends Gizmo {
 
     public RaindropBombGizmo() {
         super(RAINDROP_BOMB, new ItemBuilder(Material.TNT).setName(ChatColor.RED + RAINDROP_BOMB.string()).createItem());
+        Gizmos.get().registerListener(this);
     }
 
     @EventHandler
@@ -114,8 +115,4 @@ public class RaindropBombGizmo extends Gizmo {
         GizmoUtil.checkAndBuyGizmo(player, this, this.getItem());
     }
 
-    @Override
-    public void registerListener() {
-        Gizmos.get().registerListener(this);
-    }
 }

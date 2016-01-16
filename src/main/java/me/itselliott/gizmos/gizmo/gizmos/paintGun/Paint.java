@@ -1,25 +1,15 @@
 package me.itselliott.gizmos.gizmo.gizmos.paintGun;
 
+import me.itselliott.gizmos.gizmo.Buyable;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Created by Elliott2 on 03/01/2016.
+ * Created by Elliott2 on 14/01/2016.
  */
-public class Paint {
+public class Paint extends Buyable {
 
-    private ItemStack itemStack;
-    private int cost;
-
-    public Paint(ItemStack itemStack, int cost) {
-        this.itemStack = itemStack;
-        this.cost = cost;
+    public Paint(ItemStack itemStack, int cost, String name) {
+        super(itemStack, cost, name);
     }
 
-    public ItemStack getItemStack() {
-        return this.itemStack;
-    }
-
-    public int getCost() {
-        return this.cost;
-    }
 }

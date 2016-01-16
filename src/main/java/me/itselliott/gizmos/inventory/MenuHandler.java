@@ -32,7 +32,7 @@ public class MenuHandler implements Listener {
             @Override
             @EventHandler
             public void action(PlayerInteractEvent event) {
-                if (event.getItem().equals(this.getItemStack())) {
+                if (event.getItem() != null && event.getItem().equals(this.getItemStack())) {
                     new GizmoMenu().open(event.getActor());
                     event.setCancelled(true);
                 }

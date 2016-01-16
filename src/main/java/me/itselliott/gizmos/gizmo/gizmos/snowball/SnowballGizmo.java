@@ -30,6 +30,7 @@ public class SnowballGizmo extends Gizmo {
 
     public SnowballGizmo() {
         super(SNOWBALL, new ItemBuilder(Material.SNOW_BALL).setName(ChatColor.BOLD + SNOWBALL.name()).createItem());
+        Gizmos.get().registerListener(this);
     }
 
     @EventHandler
@@ -60,8 +61,4 @@ public class SnowballGizmo extends Gizmo {
         GizmoUtil.checkAndBuyGizmo(player, this, this.getItem());
     }
 
-    @Override
-    public void registerListener() {
-        Gizmos.get().registerListener(this);
-    }
 }

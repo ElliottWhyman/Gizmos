@@ -1,8 +1,7 @@
 package me.itselliott.gizmos.gizmo;
 
-import me.itselliott.gizmos.event.raindrop.RaindropEvent;
+import me.itselliott.gizmos.gizmo.gizmos.animalGun.AnimalGunGizmo;
 import me.itselliott.gizmos.gizmo.gizmos.downpour.DownpourGizmo;
-import me.itselliott.gizmos.gizmo.gizmos.paintGun.Paint;
 import me.itselliott.gizmos.gizmo.gizmos.paintGun.PaintGizmo;
 import me.itselliott.gizmos.gizmo.gizmos.raindropBomb.RaindropBombGizmo;
 import me.itselliott.gizmos.gizmo.gizmos.snowball.SnowballGizmo;
@@ -25,7 +24,8 @@ public class GizmoRegistry {
                 RaindropBombGizmo.class,
                 PaintGizmo.class,
                 SnowballGizmo.class,
-                DownpourGizmo.class
+                DownpourGizmo.class,
+                AnimalGunGizmo.class
         ));
     }
 

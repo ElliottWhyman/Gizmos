@@ -76,6 +76,4 @@ public abstract class Gizmo implements Listener {
      */
     public abstract void clickAction(Menu menu, Player player);
 
-    public abstract void registerListener();
-
 }
